@@ -16,7 +16,7 @@
  * @param {number} c.particleCount - Number of swirling particle beads
  * @param {number} time - Animation time elapsed in ticks
  */
-window.drawStrikerEffect = function(ctx, c, time) {
+window.customStrikerEffect = function(ctx, c, time) {
   // ===== ROULETTE STRIKER =====
   ctx.save();
   ctx.rotate(time * 0.5);
