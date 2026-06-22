@@ -1,48 +1,30 @@
 window.customStrikerEffect = function(ctx, c, time) {
-
-    const radius = c.radius + 8;
-    const dots = 12;
-
-    // Outer glow ring
-    ctx.save();
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = "#d946ef";
-
+    // ===== INNER CORE =====
     ctx.beginPath();
-    ctx.arc(0, 0, radius, 0, Math.PI * 2);
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = "#c026d3";
-    ctx.stroke();
-    ctx.restore();
-
-    // Rotating dots
-    ctx.save();
-    ctx.rotate(time * 2);
-
-    for (let i = 0; i < dots; i++) {
-
-        const angle = (Math.PI * 2 * i) / dots;
-
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius;
-
-        const size = 2 + Math.sin(time * 5 + i) * 0.8;
-
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-
-        ctx.fillStyle = "#f5d0fe";
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = "#ffffff";
-        ctx.fill();
-    }
-
-    ctx.restore();
-
-    // Inner shine ring
-    ctx.beginPath();
-    ctx.arc(0, 0, c.radius + 2, 0, Math.PI * 2);
+    ctx.arc(0, 0, c.radius * 0.8, 0, Math.PI * 2);
+    ctx.fillStyle = "#6a0dad";
+    ctx.fill();
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "rgba(255,255,255,0.35)";
+    ctx.strokeStyle = "#b984ff";
     ctx.stroke();
+
+    // ===== SEGMENTED OUTER RING =====
+    ctx.save();
+    ctx.rotate(time * 1.5);
+    const segments = 12;
+    
+    for (let i = 0; i < segments; i++) {
+        ctx.beginPath();
+        const startAngle = (i * Math.PI * 2) / segments;
+        const endAngle = startAngle + ((Math.PI * 2) / segments) * 0.7; // 70% filled, 30% gap
+        
+        ctx.arc(0, 0, c.radius * 1.2, startAngle, endAngle);
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "#a020f0";
+        ctx.lineCap = "round";
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "#a020f0";
+        ctx.stroke();
+    }
+    ctx.restore();
 };
